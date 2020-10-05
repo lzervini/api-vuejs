@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPA - API Vue JS</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/theme/default.css">
+  </head>
+
+  <body>
     <div id="app">
-        {{ message }}
+        <button v-on:click="UpdateIcon()">Mettre à jour</button>
+        <ul>
+            <li v-for="icone in icones">
+                {{ icone.name }}
+                <hr>
+            </li> 
+           
+        </ul>
     </div>
-    <script src="js/vue.js"></script>
-</body>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material"></script>
+    <script>
+      Vue.use(VueMaterial.default)
+
+      var app = new Vue({
+        el: '#app',
+        data:{
+          icones : []
+        },
+        methods:{
+          UpdateIcon(){
+            axios.get('https://restcountries.eu/rest/v2/regionalbloc/eu').then(reponse => this.icones = reponse.data).catch(erreur => this.icones = [{name:"Erreur de chargement"}]);
+          }
+        }
+      });
+    
+      
+    </script>
+  </body>
 </html>
